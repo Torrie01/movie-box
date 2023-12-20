@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext'; 
@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
 
 const Login = () => {
-  const { login } = useAuth(); 
+  const authContext = useAuth();   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -19,7 +19,10 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user.email;
       console.log('Login successful!', user);
-      login(); 
+
+     // Save authentication token in local storage
+      localStorage.setItem('authToken', userCredential.accessToken); 
+      authContext.login(); // Set the authentication status
       navigate('/'); 
     } catch (error) {
       const errorMessage = error.message;

@@ -1,5 +1,5 @@
-// eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Hero from './Hero';
 import Footer from './Footer';
 import useFetch from './fetchData';
@@ -9,6 +9,9 @@ import menu from '../images/Menu.svg';
 import search from '../images/Search.svg';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem('authToken'); // Check if authenticated
+
   const [movieLists, setMovieLists] = useState([]);
   const { data: fetchedMovies, error, loading, fetchData } = useFetch('https://api.themoviedb.org/3/discover/movie?api_key=850136383d9112b1fa4ef05d1d27c587');
   const [searchQuery, setSearchQuery] = useState('');
@@ -20,6 +23,13 @@ const HomePage = () => {
       setMovieLists(prevMovies => (currentPage === 1 ? [...fetchedMovies] : [...prevMovies, ...fetchedMovies]));
     }
   }, [fetchedMovies, currentPage]);
+
+  useEffect(() => {
+    // Redirect to login page if not authenticated
+    if (!isAuthenticated) {
+      return <Navigate to="/login" />;
+    }
+  }, [isAuthenticated]);
 
   const handleSeeMore = () => {
     fetchData(currentPage + 1);
@@ -33,6 +43,12 @@ const HomePage = () => {
   const filteredMovies = currentMovies.filter(movie =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleSignOut = () => {
+    localStorage.removeItem('authToken');
+    // Redirect to the login page after sign-out
+    navigate('/login');
+  };
 
   return (
     <div className='content'>
@@ -53,7 +69,7 @@ const HomePage = () => {
             <img src={search} alt='' />
           </div>
           <div className='right-nav'>
-            <a href='/login'>Sign Out</a>
+            <a href='/login' onClick={handleSignOut}>Sign Out</a>
             <img src={menu} alt='' className='icon'/>
           </div>
         </div>
