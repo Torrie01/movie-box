@@ -1,8 +1,0 @@
-// Util file to track last visited route
-export const setLastVisitedRoute = (route) => {
-  sessionStorage.setItem('lastVisitedRoute', route);
-};
-
-export const getLastVisitedRoute = () => {
-  return sessionStorage.getItem('lastVisitedRoute') || '/';
-};

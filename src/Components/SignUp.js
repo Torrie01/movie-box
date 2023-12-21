@@ -1,9 +1,9 @@
 // eslint-disable-next-line
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Components/Firebase';
 import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './SignUp.css';
 
 const SignUp = () => {
@@ -13,6 +13,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleSignUp = (e) => {
@@ -22,24 +23,22 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log('Account created successfully!', user);
-        navigate('/');
+        setSignupSuccess(true); 
+        setTimeout(() => {
+          navigate('/login'); 
+        }, 12000);
       })
       .catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
       });
   };
-  const handleSignUpClick = () => {
-    if (password !== confirmPassword) {
-      toast.error("Passwords don't match");
-      return;
-    }
-    navigate('/Login');
-  };
-
+ 
+ 
   return (
     <div className='SignUp-container'>
       <form onSubmit={handleSignUp}>
+        {signupSuccess && <p>Account created successfully!</p>}
         <h1>Create an Account</h1>
         <label>
           FirstName:

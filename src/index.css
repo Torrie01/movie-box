@@ -448,6 +448,32 @@ color: hsla(0, 0%, 0%, 1);
   padding: 7px 0;
 }
 
+@media screen and (max-width: 1200px) {
+  .movie-list {
+    padding: 5% 4%;
+  }
+  
+  .moviesGrid-content {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* For even smaller screens */
+@media screen and (max-width: 768px) {
+  .moviesGrid-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* For mobile screens */
+@media screen and (max-width: 480px) {
+  .moviesGrid-content {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+}
 
 @media screen and (max-width: 450px) {
   .moviesGrid-content{

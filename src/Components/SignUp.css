@@ -72,3 +72,16 @@
       max-width: 80%;
     }
   }
+
+  @media screen and (max-width: 480px) {
+    .SignUp-container {
+      max-width: 90%;
+      padding: 15px;
+    }
+    
+    .SignUp-container input[type='text'],
+    .SignUp-container input[type='email'],
+    .SignUp-container input[type='password'] {
+      padding: 6px;
+    }
+  }

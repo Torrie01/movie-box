@@ -9,21 +9,25 @@ const Login = () => {
   const authContext = useAuth();   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate();
   
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const auth = getAuth(); 
+    
+    const auth = getAuth();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user.email;
       console.log('Login successful!', user);
 
-     // Save authentication token in local storage
       localStorage.setItem('authToken', userCredential.accessToken); 
-      authContext.login(); // Set the authentication status
-      navigate('/'); 
+      authContext.login(); 
+      navigate('/');
+      setLoginSuccess(true);
+      setTimeout(() => {
+        navigate('/'); 
+      }, 15000);  
     } catch (error) {
       const errorMessage = error.message;
       console.error('Sign-in error:', errorMessage);
@@ -37,6 +41,7 @@ const Login = () => {
   return (
     <div className='login-container'>
       <form onSubmit={handleLogin}>
+        {loginSuccess && <p>User successfully signed in!</p>}
         <h1>Welcome to the MovieBox!</h1>
         <h2>Login to view our catalog of top-rated movies</h2>
         <label>

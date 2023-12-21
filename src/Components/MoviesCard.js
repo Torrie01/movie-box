@@ -21,12 +21,9 @@ const MoviesCard = ({movieLists, isClicked, handleClick}) => {
                 </div>
             </div>
         </div>
-       
-   
     ))}
     </div>
   )
-  
 }
 
 export default MoviesCard

@@ -10,7 +10,7 @@ import search from '../images/Search.svg';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const isAuthenticated = !!localStorage.getItem('authToken'); // Check if authenticated
+  const isAuthenticated = !!localStorage.getItem('authToken');
 
   const [movieLists, setMovieLists] = useState([]);
   const { data: fetchedMovies, error, loading, fetchData } = useFetch('https://api.themoviedb.org/3/discover/movie?api_key=850136383d9112b1fa4ef05d1d27c587');
@@ -25,7 +25,6 @@ const HomePage = () => {
   }, [fetchedMovies, currentPage]);
 
   useEffect(() => {
-    // Redirect to login page if not authenticated
     if (!isAuthenticated) {
       return <Navigate to="/login" />;
     }
@@ -46,7 +45,6 @@ const HomePage = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem('authToken');
-    // Redirect to the login page after sign-out
     navigate('/login');
   };
 

@@ -58,9 +58,21 @@
   .signup-link:hover {
     text-decoration: underline;
   }
+  
   @media screen and (max-width: 768px) {
     .login-container {
       max-width: 80%;
     }
   }
   
+@media screen and (max-width: 480px) {
+  .login-container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .login-container input[type='email'],
+  .login-container input[type='password'] {
+    padding: 6px;
+  }
+}
