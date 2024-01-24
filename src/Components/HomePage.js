@@ -75,7 +75,7 @@ const HomePage = () => {
       </div>
       <div className='movie-list'>
         <div className='movies-grid'>
-          <h2>Featured Movie</h2>
+          <h2>Featured Movies</h2>
           <button onClick={handleSeeMore}>See more</button>
         </div>
         {loading && <h2>Loading...</h2>}
